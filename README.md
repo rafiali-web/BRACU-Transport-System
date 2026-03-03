@@ -3,7 +3,7 @@ An online platform for BRAC university students & faculties to buy university bu
 SRS Link: https://docs.google.com/document/d/1Z02R8PTF1vfrqp-nuE2hI7PZU76Jo1NmGNtNxMBKQLY/edit?usp=sharing
 
 Team Members: 
-Rafi Ali (233014830
+Rafi Ali (23301483)
 Md. Yasin Arafat (23301460)
 Fariaa Afroz Esha (22201530) 
 Samiya Rahman Oishee (23201687)
