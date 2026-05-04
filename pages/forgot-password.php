@@ -1,32 +1,29 @@
 <?php
-/**
- * Forgot Password page for University Bus Booking System
- * Handles password reset requests
- */
+
 
 require_once '../includes/config.php';
 
-// Redirect if already logged in
+
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     header("Location: ../index.php");
     exit;
 }
 
-// Process password reset request
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     
-    // Check if email exists
+
     $user_stmt = $pdo->prepare("SELECT id, first_name FROM users WHERE email = ?");
     $user_stmt->execute([$email]);
     $user = $user_stmt->fetch();
     
     if ($user) {
-        // Generate reset token
+        
         $token = bin2hex(random_bytes(32));
         $expires = date("Y-m-d H:i:s", strtotime('+1 hour'));
         
-        // Store token in database
+     
         $token_stmt = $pdo->prepare("
             INSERT INTO password_resets (email, token, expires) 
             VALUES (?, ?, ?)
@@ -34,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ");
         $token_stmt->execute([$email, $token, $expires, $token, $expires]);
         
-        // In a real application, you would send an email here
+      
         $_SESSION['success'] = "Password reset link has been generated.";
         $_SESSION['reset_link'] = "reset-password.php?token=" . $token;
     } else {
