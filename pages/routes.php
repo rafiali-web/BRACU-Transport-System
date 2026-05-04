@@ -1,18 +1,15 @@
 <?php
-/**
- * Routes page for University Bus Booking System
- * Displays all available bus routes
- */
+
 
 require_once '../includes/config.php';
 
-// Check if user is logged in
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
     exit;
 }
 
-// Fetch all routes from database
+
 $routes = $pdo->query("SELECT * FROM routes WHERE active = 1 ORDER BY name")->fetchAll();
 
 require_once '../includes/header.php';
