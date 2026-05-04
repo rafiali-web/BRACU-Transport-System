@@ -340,4 +340,37 @@ require_once '../includes/header.php';
         </div>
         <?php endforeach; ?>
     </div>
+    <!-- Prizes Info -->
+    <div style="margin-top: 30px; text-align: center;">
+        <h3>Weekly Prizes</h3>
+        <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px;">
+            <div style="text-align: center;">
+                <div style="background: gold; width: 50px; height: 50px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-crown" style="color: white;"></i>
+                </div>
+                <strong>1st Place</strong>
+                <p>100% Off Voucher</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="background: silver; width: 50px; height: 50px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-medal" style="color: white;"></i>
+                </div>
+                <strong>2nd Place</strong>
+                <p>50% Off Voucher</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="background: #cd7f32; width: 50px; height: 50px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-medal" style="color: white;"></i>
+                </div>
+                <strong>3rd Place</strong>
+                <p>30% Off Voucher</p>
+            </div>
+        </div>
+        <p style="margin-top: 20px; color: #666;">
+            <i class="fas fa-info-circle"></i> Winners are announced every Monday. Vouchers valid for 30 days.
+        </p>
+    </div>
+</div>
+
+<?php require_once '../includes/footer.php'; ?>
     
