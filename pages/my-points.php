@@ -1,11 +1,8 @@
 <?php
-/**
- * My Points Dashboard - View points history and rewards
- */
 
 require_once '../includes/config.php';
 
-// Check if user is logged in
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
     exit;
@@ -13,12 +10,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $user_id = $_SESSION['id'];
 
-// Get user points
+
 $user = $pdo->prepare("SELECT total_points FROM users WHERE id = ?");
 $user->execute([$user_id]);
 $total_points = $user->fetchColumn();
 
-// Get points history (created_at vs earned_date depending on schema)
+
 $history = $pdo->prepare("
     SELECT * FROM points_history 
     WHERE user_id = ? 
@@ -28,7 +25,7 @@ $history = $pdo->prepare("
 $history->execute([$user_id]);
 $points_history = $history->fetchAll();
 
-// Get active rewards
+
 $rewards = $pdo->prepare("
     SELECT ur.*, r.name, r.description, r.discount_type, r.discount_value, r.icon, r.color
     FROM user_rewards ur
@@ -39,7 +36,7 @@ $rewards = $pdo->prepare("
 $rewards->execute([$user_id]);
 $active_rewards = $rewards->fetchAll();
 
-// Get points statistics
+
 $stats = [
     'earned' => $pdo->prepare("SELECT SUM(points) FROM points_history WHERE user_id = ? AND points > 0")->execute([$user_id]) ? 
                abs($pdo->query("SELECT SUM(points) FROM points_history WHERE user_id = $user_id AND points > 0")->fetchColumn()) : 0,
@@ -167,7 +164,7 @@ require_once '../includes/header.php';
 </style>
 
 <div class="container">
-    <!-- Header -->
+
     <div class="points-header">
         <div class="points-circle">
             <span class="points-number"><?php echo number_format($total_points); ?></span>
@@ -176,7 +173,7 @@ require_once '../includes/header.php';
         <p>Keep earning points to unlock amazing rewards!</p>
     </div>
     
-    <!-- Stats -->
+ 
     <div class="stats-grid">
         <div class="stat-card">
             <i class="fas fa-arrow-up" style="color: #4CAF50; font-size: 2rem;"></i>
@@ -195,7 +192,7 @@ require_once '../includes/header.php';
         </div>
     </div>
     
-    <!-- Active Rewards -->
+   
     <?php if (count($active_rewards) > 0): ?>
     <div class="card">
         <h2><i class="fas fa-tag"></i> Your Active Rewards</h2>
@@ -223,7 +220,6 @@ require_once '../includes/header.php';
     </div>
     <?php endif; ?>
     
-    <!-- Points History -->
     <div class="card">
         <h2><i class="fas fa-history"></i> Points History</h2>
         
@@ -247,7 +243,7 @@ require_once '../includes/header.php';
         <?php endif; ?>
     </div>
     
-    <!-- Ways to Earn -->
+   
     <div class="card">
         <h2><i class="fas fa-star"></i> Ways to Earn Points</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
