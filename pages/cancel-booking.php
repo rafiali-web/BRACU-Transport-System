@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['booking_id'])) {
     $user_id = $_SESSION['id'];
     $refund_percentage = isset($_POST['refund_percentage']) ? (int)$_POST['refund_percentage'] : 0;
     
-  
+   
     $booking_stmt = $pdo->prepare("
         SELECT b.*, rt.fare, bus.departure_time
         FROM bookings b
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['booking_id'])) {
         exit;
     }
     
-  
+   
     if (!isset($booking['fare']) || $booking['fare'] === null) {
         $_SESSION['error'] = "Cannot process cancellation: Fare information missing.";
         header("Location: my-bookings.php");
@@ -44,23 +44,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['booking_id'])) {
     $pdo->beginTransaction();
     
     try {
-      
+        
         $update_stmt = $pdo->prepare("UPDATE bookings SET status = 'cancelled' WHERE id = ?");
         $update_stmt->execute([$booking_id]);
         
-      
+       
         if ($refund_amount > 0 && $booking['status'] == 'confirmed') {
             $refund_stmt = $pdo->prepare("UPDATE wallet SET balance = balance + ? WHERE user_id = ?");
             $refund_stmt->execute([$refund_amount, $user_id]);
             
-         
+           
             $trans_stmt = $pdo->prepare("
                 INSERT INTO transactions (user_id, amount, type, description) 
                 VALUES (?, ?, 'credit', 'Booking cancellation refund ($refund_percentage%)')
             ");
             $trans_stmt->execute([$user_id, $refund_amount]);
             
-           
+         
             refreshWalletBalance($pdo, $user_id);
         }
         
