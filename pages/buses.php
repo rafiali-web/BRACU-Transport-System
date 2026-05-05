@@ -9,9 +9,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-
 $route_id = isset($_GET['route_id']) ? (int)$_GET['route_id'] : 0;
-
 
 $route_stmt = $pdo->prepare("SELECT * FROM routes WHERE id = ? AND active = 1");
 $route_stmt->execute([$route_id]);
@@ -22,7 +20,6 @@ if (!$route) {
     header("Location: routes.php");
     exit();
 }
-
 
 $buses_stmt = $pdo->prepare("
     SELECT b.*, 
